@@ -1,0 +1,82 @@
+{% load static %}
+{% include 'base.html' %}
+    <body class="d-flex flex-column">
+        <!-- Navbar -->
+        {% include 'components/navbar.html' %}
+        <main class="container mt-5">
+            <div class="row gap-2 justify-content-center">
+                <!-- Dynamic category cards -->
+                {% for category in page_obj %}
+                <div class="card col-3 p-0">
+                    <a href="{% url 'category_products' category.id %}" class="text-decoration-none">
+                        <img
+                            class="card-img-top"
+                            src="{{ category.image.url|default:'/static/images/categories/default.jpg' }}"
+                            alt="{{ category.name }}"
+                        />
+                        <div class="card-body">
+                            <h3>{{ category.name }}</h3>
+                            <p class="card-text">{{ category.description }}</p>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <p>No categories found.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if page_obj.paginator.num_pages > 1 %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if query %}&search={{ query }}{% endif %}" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for page_num in page_obj.paginator.page_range %}
+                    {% if page_num >= page_obj.number|add:'-2' and page_num <= page_obj.number|add:'2' %}
+                        {% if page_num == page_obj.number %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_num }}{% if query %}&search={{ query }}{% endif %}">{{ page_num }}</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&search={{ query }}{% endif %}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </main>
+
+        <!-- MDB -->
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"
+        ></script>
+    </body>
+</html>

@@ -1,0 +1,104 @@
+{% include 'base.html' %}
+	<body class="d-flex flex-column">
+		<section class="vh-100 bg-dark">
+			<div class="container py-5 h-100">
+				<div class="row d-flex align-items-center justify-content-center h-100">
+					<div class="col-md-8 col-lg-7 col-xl-6">
+						<img
+							src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+							class="img-fluid"
+							alt="Phone image"
+						/>
+					</div>
+					<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+						<form method="POST" action="{% url 'login' %}">
+							{% csrf_token %}
+							<input type="hidden" name="next" value="{{ next }}">
+							<!-- Email input -->
+							<div data-mdb-input-init class="form-outline mb-4">
+								<input
+									type="email"
+									id="form1Example13"
+									class="text-light form-control form-control-lg"
+									name="email"
+									placeholder="Email address"
+									required
+								/>
+								<label class="text-light form-label" for="form1Example13">
+									Email address
+								</label>
+							</div>
+
+							<!-- Password input -->
+							<div data-mdb-input-init class="form-outline mb-4">
+								<input
+									type="password"
+									id="form1Example23"
+									class="text-light form-control form-control-lg"
+									name="password"
+									placeholder="Password"
+									required
+								/>
+								<label class="text-light form-label" for="form1Example23">
+									Password
+								</label>
+							</div>
+
+							<!-- Remember me checkbox -->
+							<div class="d-flex justify-content-around align-items-center mb-4">
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										name="remember_me"
+										id="form1Example3"
+									/>
+									<label class="text-light form-check-label" for="form1Example3">
+										Remember me
+									</label>
+								</div>
+								<a href="#!">Forgot password?</a>
+							</div>
+
+							<!-- Submit button -->
+							<button
+								type="submit"
+								class="btn btn-primary btn-lg btn-block"
+								onclick="console.log('Sign in clicked')">
+								Sign in
+							</button>
+
+							<div
+								class="divider d-flex align-items-center my-4 d-flex justify-content-center"
+							>
+								<p class="text-light text-center fw-bold mx-3 mb-0">OR</p>
+							</div>
+
+							<a
+								data-mdb-ripple-init
+								class="btn btn-primary btn-lg btn-block"
+								style="background-color: #55acee"
+								href="{% url 'social:begin' 'google-oauth2' %}"
+								role="button"
+							>
+								<i class="fab fa-google me-2"></i>Continue with GOOGLE
+							</a>
+						</form>
+
+						<div class="d-flex justify-content-center mt-3">
+							<p class="m-0 text-light">
+								Don't have an account ?
+								<a href="{% url 'register' %}">Sign up</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- MDB -->
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"
+		></script>
+	</body>
+</html>
